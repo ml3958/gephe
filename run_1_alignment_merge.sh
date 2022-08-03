@@ -52,3 +52,4 @@ parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `sed '1d' $METADATA_POS |cut -f1
 
 echo "  Pickle diamond output"[$(date --rfc-3339=seconds)]
 python $gephe_dir/alignment/diamond_to_pickle.py ${DIR_ALIGNMENT}
+
