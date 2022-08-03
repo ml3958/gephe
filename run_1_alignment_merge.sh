@@ -1,4 +1,5 @@
 #!/bin/bash
+test specific things
 
 # DIR_INPUT=/mnt/data1/menghanliu/gephe_jgi/0_data/ # JGI data specific
 
