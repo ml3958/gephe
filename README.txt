@@ -27,5 +27,6 @@ File structure:
       - top_*%_*.csv_alignment.mci_I*.mcl_pp_ortho.csv
       - top_*%_*.csv.dic
       - top_*%_*.csv_pp.csv
+      - test
 
 - dir_pp_pog:
