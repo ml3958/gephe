@@ -80,7 +80,7 @@ do
             b ) PHYLOGENETIC_PROFILE_BINARY_CUTOFF=$OPTARG ;;
             m ) MODULE_N=$OPTARG ;;
             f ) REP_PROTEIN_FRAC=$OPTARG ;;
-	    j ) ALIGNMENT_NJOBS=$OPTARG ;;
+	          j ) ALIGNMENT_NJOBS=$OPTARG ;;
             # s ) PHENOTYPE_COLNAME=$OPTARG ;;
             h ) usage
             exit 0;;
@@ -125,8 +125,8 @@ export PREFIX_PROTEIN=top${TOP_PERCENT}
 export PREFIX_POG=${PREFIX_PROTEIN}_I${MCL_I}
 export PREFIX_POG_PP=${PREFIX_POG}_binary${PHYLOGENETIC_PROFILE_BINARY_CUTOFF}
 export PREFIX_MODULE=${PREFIX_POG_PP}_module${MODULE_N}
-export DIR_FAA_MERGE=${DIR_ALIGNMENT}/faa_merge/
-export DIR_ALIGNMENT_MERGE=${DIR_ALIGNMENT}/align_merge/
+export DIR_FAA_MERGE=${DIR_ALIGNMENT}/faa_merge/   # dir for merged proteomes
+export DIR_ALIGNMENT_MERGE=${DIR_ALIGNMENT}/align_merge/  # dir for diamond output for merged proteomes
 export DIR_ASSOCIATION=$DIR/association/
 export DIR_POG=$DIR/pog/
 export DIR_MODULE=$DIR/module/

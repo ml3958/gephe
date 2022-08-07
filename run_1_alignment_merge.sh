@@ -19,6 +19,7 @@ diamond makedb --in $DIR_ALIGNMENT/input.fasta --db $DIR_ALIGNMENT/input_databas
 
 
 echo " merge .faa files"[$(date --rfc-3339=seconds)]
+python $gephe_dir/alignment/diamond_to_pickle.py $METADATA_POS $DIR_INPUT $DIR_FAA_MERGE 
 
 echo "  Aligning..."[$(date --rfc-3339=seconds)]
 run_diamond(){
@@ -52,4 +53,3 @@ parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `sed '1d' $METADATA_POS |cut -f1
 
 echo "  Pickle diamond output"[$(date --rfc-3339=seconds)]
 python $gephe_dir/alignment/diamond_to_pickle.py ${DIR_ALIGNMENT}
-

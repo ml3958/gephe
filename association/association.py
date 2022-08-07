@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
     fileout_pp = args.output_dir + '/' + prefix+ '_pp.pickle'
     fileout_mi = args.output_dir + '/' + prefix + '_mi.pickle'
-
+    fileout_hsp_count = output_dir + '/' + prefix+ '_HSP_count.pickle'
     metadata = pd.read_table(file_metadata)
 
     # genomes = metadata.taxon_oid.map(lambda x : 'genome'+str(x))
@@ -94,6 +94,8 @@ if __name__ == '__main__':
 
     if not os.path.exists(fileout_pp):
 
+        diamond[['qseqid']].value_counts().to_pickle(fileout_hsp_count)
+        
         pp = diamond_to_pp(diamond,genomes)
         pickle.dump(pp, open(fileout_pp,'wb'))
 
