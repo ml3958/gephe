@@ -5,18 +5,19 @@
 echo "  1.1 cp input .faa files"[$(date --rfc-3339=seconds)]
 for i in $(cut -f1 $METADATA_POS)
   do
-    if [ -f $DIR_INPUT/${i}.faa ]
+    if [ ! -f $DIR_FAA/${i}.faa ]
       then
-        cp $DIR_INPUT/${i}.faa $DIR_FAA/
-      else
-        echo ${i}.faa does not exist
+        if [ ! -f $DIR_INPUT/${i}.faa ]
+          cp $DIR_INPUT/${i}.faa $DIR_FAA/
+        else
+          echo ${i}.faa does not exist
     fi
 done
 
 
 # -----------------------------
 echo " 1.2 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
-python $gephe_dir/alignment/merge_faa.py $DIR_FAA $DIR_FAA_MERGE ${N_FAA_TO_MERGE}
+python $gephe_dir/alignment/merge_faa.py ${DIR_FAA} ${DIR_FAA_MERGE} ${N_FAA_TO_MERGE}
 # -----------------------------
 
 
@@ -43,8 +44,8 @@ run_diamond(){
       echo $f started $(date)
           diamond blastp \
           -q ${DIR_FAA_MERGE}/${f}.faa \
-          --out $DIR_ALIGNMENT_merge/${f}.diamond.out \
-          --db $DIR_ALIGNMENT/input_database \
+          --out ${DIR_ALIGNMENT_MERGE}/${f}.diamond.out \
+          --db ${DIR_ALIGNMENT}/input_database \
           -e ${ALIGNMENT_EVALUE} -k ${ALIGNMENT_MAX} \
           --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
           --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
