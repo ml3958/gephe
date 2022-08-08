@@ -39,13 +39,13 @@ diamond makedb --in $DIR_ALIGNMENT/input.fasta --db $DIR_ALIGNMENT/input_databas
 echo "  1.4 Aligning..."[$(date --rfc-3339=seconds)]
 run_diamond(){
   f=$1
-  if [ ! -f $DIR_ALIGNMENT/${f}.diamond.out ] || [ ! -s $DIR_ALIGNMENT/${f}.diamond.out  ]
+  if [ ! -f $DIR_ALIGNMENT_MERGE/${f}.diamond.out ] || [ ! -s $DIR_ALIGNMENT_MERGE/${f}.diamond.out  ]
     then
       echo $f started $(date)
           diamond blastp \
-          -q $DIR_INPUT/${f}.faa \
+          -q ${DIR_FAA_MERGE}/${f}.faa \
+          --out $DIR_ALIGNMENT_merge/${f}.diamond.out \
           --db $DIR_ALIGNMENT/input_database \
-          --out $DIR_ALIGNMENT/${f}.diamond.out \
           -e ${ALIGNMENT_EVALUE} -k ${ALIGNMENT_MAX} \
           --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
           --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
@@ -57,16 +57,16 @@ run_diamond(){
   fi
 }
 export -f run_diamond
-parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `sed '1d' $METADATA_POS |cut -f1` ::: ${ALIGNMENT_EVALUE} ::: ${ALIGNMENT_MAX} ::: $DIR_ALIGNMENT
+parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| sed 's/.faa//g'`
 
 
 # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
 echo " 1.5 Scan for empty files, and realign"[$(date --rfc-3339=seconds)]
-parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `sed '1d' $METADATA_POS |cut -f1` ::: ${ALIGNMENT_EVALUE} ::: ${ALIGNMENT_MAX} ::: $DIR_ALIGNMENT
+parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| sed 's/.faa//g'`
 
 # -----------------------------
 echo " 1.6 Divide .merged diamond output"[$(date --rfc-3339=seconds)] # added as part of V4
-python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE $DIR_ALIGNMENT
+parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{.} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
 # -----------------------------
 
 
