@@ -49,7 +49,7 @@ EOF
 
 
 # [optional variables with default values]
-ALIGNMENT_MAX=1000
+ALIGNMENT_MAX=10000
 ALIGNMENT_EVALUE='1e-10'
 ALIGNMENT_QUERY_COVERAGE='66'
 ALIGNMENT_SUBJECT_COVERAGE='60'
@@ -61,6 +61,8 @@ PHYLOGENETIC_PROFILE_BINARY_CUTOFF=0.5 #  `binary`/`evalue`/`count`
 MODULE_N=12
 PHENOTYPE_COLNAME='t'
 REP_PROTEIN_FRAC=1
+N_FAA_TO_MERGE=200 # need to add
+
 
 # [replace default with user-supplied value]
 while [ $# -gt 0 ]
@@ -125,6 +127,7 @@ export PREFIX_PROTEIN=top${TOP_PERCENT}
 export PREFIX_POG=${PREFIX_PROTEIN}_I${MCL_I}
 export PREFIX_POG_PP=${PREFIX_POG}_binary${PHYLOGENETIC_PROFILE_BINARY_CUTOFF}
 export PREFIX_MODULE=${PREFIX_POG_PP}_module${MODULE_N}
+export DIR_FAA=${DIR_ALIGNMENT}/faa/   # dir for merged proteomes
 export DIR_FAA_MERGE=${DIR_ALIGNMENT}/faa_merge/   # dir for merged proteomes
 export DIR_ALIGNMENT_MERGE=${DIR_ALIGNMENT}/align_merge/  # dir for diamond output for merged proteomes
 export DIR_ASSOCIATION=$DIR/association/
@@ -150,7 +153,8 @@ export DIR_LOG=$DIR/logs_${PREFIX_MODULE}/
 function run_align(){
   echo --------------- --------------- --------------- ---------------
   echo STEP1: Alignment STARTED... [$(date --rfc-3339=seconds)]
-  bash $gephe_dir/run_1_alignment.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err
+  bash $gephe_dir/run_1_alignment_merge.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err  # recommended for > 1000 genomes
+  # bash $gephe_dir/run_1_alignment.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err  # default
   echo STEP1: Alignment FINISHED   [$(date --rfc-3339=seconds)]
   echo --------------- --------------- --------------- ---------------
 
@@ -190,7 +194,7 @@ function run_module(){
 # [[ -z "$DIR_ALIGNMENT" ]] && echo "! ERROR: <dir_align> empty, exiting... "; usage; exit 1
 # [[ -z "$DIR" ]] && echo "! ERROR: <dir> empty, exiting... "; usage; exit 1
 
-mkdir -p  $DIR_ALIGNMENT $DIR $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
+mkdir -p  $DIR_ALIGNMENT $DIR_FAA $DIR_FAA_MERGE $DIR_ALIGNMENT_MERGE $DIR $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
 
 if [ $COMMAND == "all" ]; then
     run_align
