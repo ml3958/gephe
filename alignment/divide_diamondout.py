@@ -2,10 +2,18 @@
 import argparse
 import os, pickle, sys, glob
 import pandas as pd
+import glob
+import os
+import numpy as np
+import itertools
+import pandas as pd
+from tqdm import tqdm
 
 # Author: Menghan Liu @ Tavazoie lab at Columbia University
 # Date: July 8, 2022
 # USAGE: python $gephe_dir/alignment/diamond_to_pickle.py $METADATA_POS $DIR_INPUT $DIR_FAA_MERGE
+
+
 
 def divide_diamondout(FILE, DIR_OUT, split_char='_', chunksize = 10 ** 6, test_only = False,
                      diamond_colnames = ['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore']):
