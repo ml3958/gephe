@@ -8,9 +8,11 @@ for i in $(cut -f1 $METADATA_POS)
     if [ ! -f $DIR_FAA/${i}.faa ]
       then
         if [ ! -f $DIR_INPUT/${i}.faa ]
-          cp $DIR_INPUT/${i}.faa $DIR_FAA/
+          then
+            cp $DIR_INPUT/${i}.faa $DIR_FAA/
         else
           echo ${i}.faa does not exist
+        fi
     fi
 done
 
