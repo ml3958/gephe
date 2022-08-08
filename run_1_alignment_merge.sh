@@ -59,12 +59,12 @@ run_diamond(){
   fi
 }
 export -f run_diamond
-parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| sed 's/.faa//g'`
-
+# parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
+parallel -j 2 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 
 # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
 echo " 1.5 Scan for empty files, and realign"[$(date --rfc-3339=seconds)]
-parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| sed 's/.faa//g'`
+parallel -j 2 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 
 # -----------------------------
 echo " 1.6 Divide .merged diamond output"[$(date --rfc-3339=seconds)] # added as part of V4
