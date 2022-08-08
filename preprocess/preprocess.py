@@ -8,7 +8,7 @@
 
 import argparse
 from Bio import SeqIO
-import re, plotnine, sklearn,json, itertools, os, skbio, pickle, sys,glob
+import re, plotnine, sklearn,json, itertools, os, pickle, sys,glob
 import pandas as pd
 
 from datetime import datetime
