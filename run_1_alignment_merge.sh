@@ -69,7 +69,7 @@ parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 
 # -----------------------------
 echo " 1.6 Divide .merged diamond output"[$(date --rfc-3339=seconds)] # added as part of V4
-parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{.} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
+parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
 # -----------------------------
 
 

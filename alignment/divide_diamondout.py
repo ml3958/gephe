@@ -50,4 +50,4 @@ if __name__ == '__main__':
     dir_output = args.dir_output
     sep = args.sep
 
-    divide_diamondout(diamond_file_merged,dir_output)
+    divide_diamondout(diamond_file_merged,dir_output, split_char=sep)
