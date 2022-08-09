@@ -8,7 +8,7 @@ for i in $(cut -f1 $METADATA_POS)
     if [ ! -f $DIR_FAA/${i}.faa ]
       then
         echo coping to $DIR_FAA/${i}.faa....
-        if [ ! -f $DIR_INPUT/${i}.faa ]
+        if [ -f $DIR_INPUT/${i}.faa ]
           then
             cp $DIR_INPUT/${i}.faa $DIR_FAA/
           else
