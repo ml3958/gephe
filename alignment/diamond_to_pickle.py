@@ -8,8 +8,8 @@ import pandas as pd
 
 def read_diamond_output(diamond_file):
     diamond = pd.read_table(diamond_file,
-                            header=None,sep='\t',
-                            # names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'] # column already exists for customized diamond output format 
+                            header=None,sep='\t'
+                            # names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'] # column already exists for customized diamond output format
                             )
     return(diamond)
 
