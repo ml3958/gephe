@@ -33,6 +33,7 @@ from sklearn.cluster import AgglomerativeClustering
 
 import scipy.cluster.hierarchy as shc
 import dfply
+import tqdm
 
 
 def mi_null(metadata, times=1000):
