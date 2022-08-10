@@ -73,19 +73,26 @@ if __name__ == '__main__':
     parser.add_argument('dir_association',help='path to association folder')
     parser.add_argument('file_metadata',help='metadata')
     parser.add_argument('metadata_colname',help='colname for phenotype')
+    parser.add_argument('diamond_k',help='{ALIGNMENT_MAX}')
     parser.add_argument('-b','--extra_breaks', dest = 'extra_breaks' ,nargs='+', help='<Required> Set flag')
 
     args = parser.parse_args()
     dir_association = args.dir_association
     metadata_colname = args.metadata_colname
+    diamond_k = args.diamond_k
     extra_breaks = args.extra_breaks
 
 
     metadata = pd.read_csv(args.file_metadata,sep="\t")
 
     # compute null distribution
-    background = mi_null(metadata[metadata_colname])
-    pickle.dump(background,open(dir_association+'/summary/null.pickle','wb'))
+    if os.path.exists(dir_association+'/summary/null.pickle'):
+        print('loading percomputed null distribution:' + dir_association+'/summary/null.pickle')
+        background = pickle.load(open(dir_association+'/summary/null.pickle','rb'))
+    else:
+        print('calculating null distribution:' + dir_association+'/summary/null.pickle')
+        background = mi_null(metadata[metadata_colname])
+        pickle.dump(background,open(dir_association+'/summary/null.pickle','wb'))
 
     # compute mi Z score
     result_combine = mi_zscore(glob.glob(dir_association+'/*mi.pickle'),background)
@@ -98,7 +105,7 @@ if __name__ == '__main__':
     g=(ggplot(result_combine,aes('mi')) +
         geom_histogram(data=result_combine, bins=100, fill="red", alpha=0.5)+
         theme(figure_size=(5,5))+
-  theme_bw())
+        theme_bw())
     g.save(dir_association+'/summary/distribution_mi.png',dpi=300)
 
     breaks = [0.99,0.995,0.996,0.997,0.998,0.999]
@@ -129,8 +136,15 @@ if __name__ == '__main__':
   theme_bw())
     g.save(dir_association+'/summary/mi_z2.png',dpi=300)
 
-    # save top proteins
-    # for i in range(breaks.shape[0]):
-    #     temp = result_combine[result_combine.mi_z >= breaks.breaks[i]]
-    #     temp.to_csv(dir_association+'/summary/top_'+breaks.label[i]+'_'+str(temp.shape[0])+'.csv',sep="\t")
-    #     print(breaks.label[i],temp.shape[0])
+    # plot HSP count relative to diamond_k
+    HSP_count = pd.DataFrame()
+    for f in tqdm.tqdm(glob.glob(dir_association + '/*HSP_count.pickle')):
+        HSP_count = pd.concat((HSP_count, pd.read_pickle(f)))
+    fig, ax = plt.subplots()
+    HSP_count.hist(ax=ax)
+    fig.savefig(dir_association + '/summary/hsp_count.png')
+    plt.axvline(diamond_k, color='r') # vertical
+    fig.savefig(dir_association + '/summary/hsp_count_with_k.png')
+    plt.xlim([diamond_k-10,diamond_k+10]) # vertical
+    plt.ylim([0,100]) # vertical
+    fig.savefig(dir_association + '/summary/hsp_count_with_k_zoom.png')
