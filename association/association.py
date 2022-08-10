@@ -88,11 +88,13 @@ if __name__ == '__main__':
 
     # genomes = metadata.taxon_oid.map(lambda x : 'genome'+str(x))
     genomes = metadata.taxon_oid
-    diamond = pd.read_pickle(open(file_diamond,'rb'))
+
     # if not diamond.columns.isin(genomes).any():
     #     genomes = metadata.taxon_oid.map(lambda x : 'genome'+str(x)) # JGI data specific
 
     if not os.path.exists(fileout_pp):
+
+        diamond = pd.read_pickle(open(file_diamond,'rb'))
 
         diamond[['qseqid']].value_counts().to_pickle(fileout_hsp_count)
 

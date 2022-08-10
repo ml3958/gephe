@@ -73,7 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('dir_association',help='path to association folder')
     parser.add_argument('file_metadata',help='metadata')
     parser.add_argument('metadata_colname',help='colname for phenotype')
-    parser.add_argument('diamond_k',help='{ALIGNMENT_MAX}')
+    parser.add_argument('diamond_k',help='${ALIGNMENT_MAX}')
     parser.add_argument('-b','--extra_breaks', dest = 'extra_breaks' ,nargs='+', help='<Required> Set flag')
 
     args = parser.parse_args()
