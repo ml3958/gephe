@@ -43,7 +43,7 @@ then
     do
       if [ -f $DIR_INPUT/${i}.faa ]
         then
-          cat $DIR_INPUT/${i}.faa  >> $DIR_ALIGNMENT/input.fasta
+          cat $DIR_INPUT/${i}.faa  >> ${DIR_ALIGNMENT_MASTER}/input.fasta
         else
           echo ${i}.faa does not exist
       fi
@@ -55,7 +55,7 @@ fi
 # rm -rf  ${DIR_ALIGNMENT_MASTER}/input_ipr.txt
 if [ ! -f ${DIR_ALIGNMENT_MASTER}/input_database.dmnd ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input_database.dmndinput.fasta ]
 then
-  diamond makedb --in $DIR_ALIGNMENT/input.fasta --db $DIR_ALIGNMENT/input_database
+  diamond makedb --in ${DIR_ALIGNMENT_MASTER}/input.fasta --db ${DIR_ALIGNMENT_MASTER}/input_database
 else
   echo ${DIR_ALIGNMENT_MASTER}/input_database.dmnd exists, skip coping....[$(date --rfc-3339=seconds)]
 fi
