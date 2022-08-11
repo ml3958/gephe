@@ -74,4 +74,4 @@ parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/
 
 
 echo "  1.7 Pickle diamond output"[$(date --rfc-3339=seconds)]
-python $gephe_dir/alignment/diamond_to_pickle.py ${DIR_ALIGNMENT}
+parapllel -j ${ALIGNMENT_NJOBS} "python $gephe_dir/alignment/diamond_to_pickle.py {} " ::: `ls ${DIR_ALIGNMENT}/*diamond.out`

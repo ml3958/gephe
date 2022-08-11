@@ -17,18 +17,15 @@ import pandas as pd
 if __name__ == '__main__':
     # parse input argument
     parser = argparse.ArgumentParser(description='Change fasta name for jgi [*.genes.faa] files ')
-    parser.add_argument('dir', help='In/output directory')
+    parser.add_argument('file_diamond', help='.diamond.out')
     args = parser.parse_args()
 
-    dir = args.dir
+    file_diamond  = args.file_diamond
 
-    files = glob.glob(dir + '/*diamond.out')
-
-    for f in files:
-        if os.path.exists(f+'.pickle'):
-            print(f+'.pickle exists, skipping')
-            next
+    if os.path.exists(file_diamond + '.pickle'):
+        print(file_diamond +'.pickle exists, skipping')
         # diamond = read_diamond_output(f)
-        diamond = pd.read_table(f)
-        print('saving ' + f+ '.pickle...')
-        pickle.dump(diamond,open(f+'.pickle','wb'))
+    else:
+        diamond = pd.read_table(file_diamond)
+        print('saving ' + file_diamond+ '.pickle...')
+        pickle.dump(diamond,open(file_diamond+'.pickle','wb'))
