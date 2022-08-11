@@ -122,7 +122,7 @@ export REP_PROTEIN_FRAC=${REP_PROTEIN_FRAC}
 export ALIGNMENT_NJOBS=${ALIGNMENT_NJOBS}
 
 # [prefix]
-# export gephe_dir=/home/menghan/Tools/gephe/
+export gephe_dir=/home/menghan/Tools/gephe/
 export PREFIX_PROTEIN=top${TOP_PERCENT}
 export PREFIX_POG=${PREFIX_PROTEIN}_I${MCL_I}
 export PREFIX_POG_PP=${PREFIX_POG}_binary${PHYLOGENETIC_PROFILE_BINARY_CUTOFF}
