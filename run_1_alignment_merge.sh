@@ -39,15 +39,15 @@ fi
 echo "  1.3 build reference db"[$(date --rfc-3339=seconds)]
 if [ ! -f ${DIR_ALIGNMENT_MASTER}/input.fasta ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input.fasta ]
 then
-  # for i in $(cut -f1 $METADATA)
-  #   do
-  #     if [ -f $DIR_INPUT/${i}.faa ]
-  #       then
-  #         cat $DIR_INPUT/${i}.faa  >> ${DIR_ALIGNMENT_MASTER}/input.fasta
-  #       else
-  #         echo ${i}.faa does not exist
-  #     fi
-  #   done
+  for i in $(cut -f1 $METADATA)
+    do
+      if [ -f $DIR_INPUT/${i}.faa ]
+        then
+          cat $DIR_INPUT/${i}.faa  >> ${DIR_ALIGNMENT_MASTER}/input.fasta
+        else
+          echo ${i}.faa does not exist
+      fi
+    done
   echo coping input to ${DIR_ALIGNMENT_MASTER}/input.fasta[$(date --rfc-3339=seconds)]
 else
   echo ${DIR_ALIGNMENT_MASTER}/input.fasta exists, skip coping....[$(date --rfc-3339=seconds)]
@@ -103,6 +103,6 @@ fi
 
 
 echo "  1.7 Pickle diamond output"[$(date --rfc-3339=seconds)]
-parapllel -j ${ALIGNMENT_NJOBS} \
+parallel -j ${ALIGNMENT_NJOBS} \
   "[ ! -f {}.pickle ] && python $gephe_dir/alignment/diamond_to_pickle.py {} || echo {}.pickle exists, skipping...." \
   ::: `ls ${DIR_ALIGNMENT}/*diamond.out`
