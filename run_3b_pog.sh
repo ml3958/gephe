@@ -15,7 +15,7 @@ fi
 #
 echo "  POG annotate"[$(date --rfc-3339=seconds)]
 python $gephe_dir/pog/annotate_pog.py \
-  $DIR_ALIGNMENT $DIR_POG $PREFIX_PROTEIN $PREFIX_POG -f ${REP_PROTEIN_FRAC}
+  $DIR_ALIGNMENT_MASTER $DIR_POG $PREFIX_PROTEIN $PREFIX_POG -f ${REP_PROTEIN_FRAC}
 
 echo "  POG phylogenetic profile file"[$(date --rfc-3339=seconds)]
 python $gephe_dir/pog/generate_pog_pp.py \

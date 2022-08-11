@@ -32,11 +32,11 @@ import scipy.cluster.hierarchy as shc
 import dfply
 
 
-def read_diamond_output(diamond_file):
-    diamond = pd.read_table(diamond_file,
-                            header=None,sep='\t',
-                            names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'])
-    return(diamond)
+# def read_diamond_output(diamond_file):
+#     diamond = pd.read_table(diamond_file,
+#                             header=None,sep='\t',
+#                             names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'])
+#     return(diamond)
 
 def mcl_to_pog(mcl_file, dic_file):
     dic = pd.read_csv(dic_file,sep="\t",header=None,)
@@ -75,7 +75,7 @@ def dplyr_paste(x,sep=','):
 if __name__ == '__main__':
     # parse input argument
     parser = argparse.ArgumentParser(description='pog functional annotation')
-    parser.add_argument('dir_alignment',help='alignment folder')
+    parser.add_argument('dir_alignment_master',help='alignment folder')
     parser.add_argument('dir_pog',help='pog folder')
     parser.add_argument('prefix_protein',help='${PREFIX_PROTEIN}')
     parser.add_argument('prefix_pog',help='${PREFIX_POG}')
@@ -84,7 +84,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    DIR_ALIGNMENT = args.dir_alignment
+    DIR_ALIGNMENT_MASTER = args.dir_alignment_master
     DIR_POG = args.dir_pog
     PREFIX_PROTEIN = args.prefix_protein
     PREFIX_POG = args.prefix_pog
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     # input
     FILE_POG = DIR_POG + PREFIX_POG + '.mcl'
     FILE_PROTEIN_DIC = DIR_POG + '/' + PREFIX_PROTEIN + '.dic'
-    FAA = DIR_ALIGNMENT + '/input.fasta'
+    FAA = DIR_ALIGNMENT_MASTER + '/input.fasta'
 
     # output
     FILE_PROTSEQ = DIR_POG + PREFIX_PROTEIN  + '.protseq'
