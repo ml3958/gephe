@@ -70,7 +70,7 @@ run_diamond(){
           diamond blastp \
           -q ${DIR_FAA_MERGE}/${f}.faa \
           --out ${DIR_ALIGNMENT_MERGE}/${f}.diamond.out \
-          --db ${DIR_ALIGNMENT}/input_database \
+          --db ${DIR_ALIGNMENT_MASTER}/input_database \
           -e ${ALIGNMENT_EVALUE} -k ${ALIGNMENT_MAX} \
           --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
           --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
