@@ -37,18 +37,28 @@ fi
 
 
 echo "  1.3 build reference db"[$(date --rfc-3339=seconds)]
-rm -rf $DIR_ALIGNMENT/input.fasta
-rm -rf  $DIR_ALIGNMENT/input_ipr.txt
-for i in $(cut -f1 $METADATA)
-  do
-    if [ -f $DIR_INPUT/${i}.faa ]
-      then
-        cat $DIR_INPUT/${i}.faa  >> $DIR_ALIGNMENT/input.fasta
-      else
-        echo ${i}.faa does not exist
-    fi
-  done
-diamond makedb --in $DIR_ALIGNMENT/input.fasta --db $DIR_ALIGNMENT/input_database
+if [ ! -f ${DIR_ALIGNMENT_MASTER}/input.fasta ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input.fasta ]
+then
+  for i in $(cut -f1 $METADATA)
+    do
+      if [ -f $DIR_INPUT/${i}.faa ]
+        then
+          cat $DIR_INPUT/${i}.faa  >> $DIR_ALIGNMENT/input.fasta
+        else
+          echo ${i}.faa does not exist
+      fi
+    done
+else
+  echo ${DIR_ALIGNMENT_MASTER}/input.fasta exists, skip coping....[$(date --rfc-3339=seconds)]
+fi
+# rm -rf ${DIR_ALIGNMENT_MASTER}/input.fasta
+# rm -rf  ${DIR_ALIGNMENT_MASTER}/input_ipr.txt
+if [ ! -f ${DIR_ALIGNMENT_MASTER}/input_database.dmnd ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input_database.dmndinput.fasta ]
+then
+  diamond makedb --in $DIR_ALIGNMENT/input.fasta --db $DIR_ALIGNMENT/input_database
+else
+  echo ${DIR_ALIGNMENT_MASTER}/input_database.dmnd exists, skip coping....[$(date --rfc-3339=seconds)]
+fi
 
 
 echo "  1.4 Aligning..."[$(date --rfc-3339=seconds)]
