@@ -30,7 +30,7 @@ def divide_diamondout(FILE, DIR_OUT, split_char='_', chunksize = 10 ** 6, test_o
             if not os.path.isfile(f):
                 df.to_csv(f, sep='\t', index=False)
             else: # else it exists so append without writing the header
-                df.to_csv(f, sep='\t', mode='a',header=False, index=False)
+                df.to_csv(f, sep='\t', mode='a',header=False, index=False)  # when appending, header is discarded
         # for i in dat.qseqid.map(lambda x: x.split('|')[0]).unique()
         i+=1
 

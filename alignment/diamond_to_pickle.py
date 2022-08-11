@@ -29,6 +29,6 @@ if __name__ == '__main__':
             print(f+'.pickle exists, skipping')
             next
         # diamond = read_diamond_output(f)
-        diamond = pd.read_tables(f)
+        diamond = pd.read_table(f)
         print('saving ' + f+ '.pickle...')
         pickle.dump(diamond,open(f+'.pickle','wb'))
