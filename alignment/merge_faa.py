@@ -61,4 +61,5 @@ if __name__ == '__main__':
     dir_output = args.dir_output
     n_faa_to_merge = args.n_faa_to_merge
 
+    # dir_output='/mnt/data1/menghanliu/gephe/gephe_habitat/gem_v4/diamond_q75/'
     merge_faa(dir_input,dir_output,n_faa_to_merge)

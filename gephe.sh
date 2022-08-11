@@ -102,7 +102,7 @@ export METADATA=${ARGS[1]}
 export METADATA_POS=${ARGS[2]}
 export PHENOTYPE_COLNAME=${ARGS[3]}
 export DIR_INPUT=${ARGS[4]}
-export DIR_ALIGNMENT=${ARGS[5]}
+export DIR_ALIGNMENT_MASTER=${ARGS[5]}
 export DIR=${ARGS[6]}
 
 
@@ -127,9 +127,10 @@ export PREFIX_PROTEIN=top${TOP_PERCENT}
 export PREFIX_POG=${PREFIX_PROTEIN}_I${MCL_I}
 export PREFIX_POG_PP=${PREFIX_POG}_binary${PHYLOGENETIC_PROFILE_BINARY_CUTOFF}
 export PREFIX_MODULE=${PREFIX_POG_PP}_module${MODULE_N}
-export DIR_FAA=${DIR_ALIGNMENT}/faa/   # dir for merged proteomes
-export DIR_FAA_MERGE=${DIR_ALIGNMENT}/faa_merge/   # dir for merged proteomes
-export DIR_ALIGNMENT_MERGE=${DIR_ALIGNMENT}/align_merge/  # dir for diamond output for merged proteomes
+export DIR_FAA=${DIR_ALIGNMENT_MASTER}/faa/   # dir for merged proteomes
+export DIR_FAA_MERGE=${DIR_ALIGNMENT_MASTER}/faa_merge/   # dir for merged proteomes
+export DIR_ALIGNMENT_MERGE=${DIR_ALIGNMENT_MASTER}/align_merge/  # dir for diamond output for merged proteome
+export DIR_ALIGNMENT=${DIR_ALIGNMENT_MASTER}/align/  # divided diamond.out
 export DIR_ASSOCIATION=$DIR/association/
 export DIR_POG=$DIR/pog/
 export DIR_MODULE=$DIR/module/
@@ -194,7 +195,7 @@ function run_module(){
 # [[ -z "$DIR_ALIGNMENT" ]] && echo "! ERROR: <dir_align> empty, exiting... "; usage; exit 1
 # [[ -z "$DIR" ]] && echo "! ERROR: <dir> empty, exiting... "; usage; exit 1
 
-mkdir -p  $DIR_ALIGNMENT $DIR_FAA $DIR_FAA_MERGE $DIR_ALIGNMENT_MERGE $DIR $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
+mkdir -p  $DIR_ALIGNMENT_MASTER $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
 
 if [ $COMMAND == "all" ]; then
     run_align

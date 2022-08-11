@@ -3,24 +3,36 @@
 # DIR_INPUT=/mnt/data1/menghanliu/gephe_jgi/0_data/ # JGI data specific
 
 echo "  1.1 cp input .faa files"[$(date --rfc-3339=seconds)]
-for i in $(cut -f1 $METADATA_POS)
-  do
-    if [ ! -f $DIR_FAA/${i}.faa ]
-      then
-        echo coping to $DIR_FAA/${i}.faa....
-        if [ -f $DIR_INPUT/${i}.faa ]
+if [ -d $DIR_FAA ]
+then
+    echo $DIR_FAA exists, skip coping [$(date --rfc-3339=seconds)]
+else
+    mkdir $DIR_FAA
+    for i in $(cut -f1 $METADATA_POS)
+      do
+        if [ ! -f $DIR_FAA/${i}.faa ]
           then
-            cp $DIR_INPUT/${i}.faa $DIR_FAA/
-          else
-            echo $DIR_INPUT/${i}.faa does not exist
+            echo coping to $DIR_FAA/${i}.faa....
+            if [ -f $DIR_INPUT/${i}.faa ]
+              then
+                cp $DIR_INPUT/${i}.faa $DIR_FAA/
+              else
+                echo $DIR_INPUT/${i}.faa does not exist
+            fi
         fi
-    fi
-done
+    done
+fi
 
 
 # -----------------------------
 echo " 1.2 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
-python $gephe_dir/alignment/merge_faa.py ${DIR_FAA} ${DIR_FAA_MERGE} ${N_FAA_TO_MERGE}
+if [ -d ${DIR_FAA_MERGE} ]
+then
+  echo $DIR_FAA_MERGE exists, skip faa merging [$(date --rfc-3339=seconds)]
+else
+  mkdir $DIR_FAA_MERGE
+  python $gephe_dir/alignment/merge_faa.py ${DIR_FAA} ${DIR_FAA_MERGE} ${N_FAA_TO_MERGE}
+fi
 # -----------------------------
 
 
@@ -68,10 +80,18 @@ echo " 1.5 Scan for empty files, and realign"[$(date --rfc-3339=seconds)]
 parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 
 # -----------------------------
-echo " 1.6 Divide .merged diamond output"[$(date --rfc-3339=seconds)] # added as part of V4
-parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
+echo " 1.6 Divide merged .diamond.out"[$(date --rfc-3339=seconds)] # added as part of V4
+if [ -d ${DIR_ALIGNMENT} ]
+then
+  echo ${DIR_ALIGNMENT} exists, skip dividing merged*.diamond.out [$(date --rfc-3339=seconds)]
+else
+  mkdir ${DIR_ALIGNMENT}
+  parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
+fi
 # -----------------------------
 
 
 echo "  1.7 Pickle diamond output"[$(date --rfc-3339=seconds)]
-parapllel -j ${ALIGNMENT_NJOBS} "python $gephe_dir/alignment/diamond_to_pickle.py {} " ::: `ls ${DIR_ALIGNMENT}/*diamond.out`
+parapllel -j ${ALIGNMENT_NJOBS} \
+  "[ ! -f {}.pickle ] && python $gephe_dir/alignment/diamond_to_pickle.py {} || echo {}.pickle exists, skipping...." \
+  ::: `ls ${DIR_ALIGNMENT}/*diamond.out`
