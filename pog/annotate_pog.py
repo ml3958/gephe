@@ -129,26 +129,28 @@ if __name__ == '__main__':
         os.system(command)
 
         # diamond alignment to
-        command = ['time diamond blastp','--db /mnt/data1/menghanliu/data/biocyc_annotation/tier1/combined/combined_protseq_diamond.dmnd',
-        '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_META,
-           '--max-target-seqs','1',
-           '--query-cover', '66',
-          '--evalue 1e-10',
-           '--outfmt','6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore',
-          '--very-sensitive']
-        command = ' '.join(command)
-        os.system(command)
+        if not os.path.exists(FILE_PROTSEQ_ALIGNMENT_META):
+            command = ['time diamond blastp','--db /mnt/data1/menghanliu/data/biocyc_annotation/tier1/combined/combined_protseq_diamond.dmnd',
+            '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_META,
+               '--max-target-seqs','1',
+               '--query-cover', '66',
+              '--evalue 1e-10',
+               '--outfmt','6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore',
+              '--very-sensitive']
+            command = ' '.join(command)
+            os.system(command)
 
-        command = ['time diamond blastp',
-          '--db /mnt/data1/menghanliu/data/protein_database/uniref/uniref50.fasta',
-          '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_UNIREF,
-           '--max-target-seqs','1',
-           '--query-cover', '66',
-          '--evalue 1e-10',
-           '--outfmt','6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore',
-          '--very-sensitive']
-        command = ' '.join(command)
-        os.system(command)
+        if not os.path.exists(FILE_PROTSEQ_ALIGNMENT_UNIREF):
+            command = ['time diamond blastp',
+              '--db /mnt/data1/menghanliu/data/protein_database/uniref/uniref50.fasta',
+              '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_UNIREF,
+               '--max-target-seqs','1',
+               '--query-cover', '66',
+              '--evalue 1e-10',
+               '--outfmt','6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore',
+              '--very-sensitive']
+            command = ' '.join(command)
+            os.system(command)
 
         # annotate hits
         out = read_diamond_output(FILE_PROTSEQ_ALIGNMENT_META)
@@ -172,6 +174,6 @@ if __name__ == '__main__':
     else:
         annot = DplyFrame(pd.read_table(out_full))
         annot_sum = pog_annotate_summary(left_join(annot,pog[1]),  annot_N=0)
-        annot_sum
+        # annot_sum
         annot_sum.to_csv(out_summary, index=False,sep="\t")
         print('saved to :' + out_summary)
