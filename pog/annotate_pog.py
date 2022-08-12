@@ -32,11 +32,11 @@ import scipy.cluster.hierarchy as shc
 import dfply
 
 
-# def read_diamond_output(diamond_file):
-#     diamond = pd.read_table(diamond_file,
-#                             header=None,sep='\t',
-#                             names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'])
-#     return(diamond)
+def read_diamond_output(diamond_file):
+    diamond = pd.read_table(diamond_file,
+                            header=None,sep='\t',
+                            names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'])
+    return(diamond)
 
 def mcl_to_pog(mcl_file, dic_file):
     dic = pd.read_csv(dic_file,sep="\t",header=None,)
