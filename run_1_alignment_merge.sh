@@ -54,7 +54,7 @@ else
 fi
 # rm -rf ${DIR_ALIGNMENT_MASTER}/input.fasta
 # rm -rf  ${DIR_ALIGNMENT_MASTER}/input_ipr.txt
-if [ ! -f ${DIR_ALIGNMENT_MASTER}/input_database.dmnd ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input_database.dmndinput.fasta ]
+if [ ! -f ${DIR_ALIGNMENT_MASTER}/input_database.dmnd ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input_database.dmnd ]
 then
   diamond makedb --in ${DIR_ALIGNMENT_MASTER}/input.fasta --db ${DIR_ALIGNMENT_MASTER}/input_database
 else
