@@ -84,7 +84,7 @@ run_diamond(){
 }
 export -f run_diamond
 # parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
-mkdir -p ${DIR_FAA_MERGE}
+mkdir -p ${DIR_ALIGNMENT_MERGE}
 parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 
 # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
