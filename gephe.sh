@@ -106,7 +106,7 @@ export DIR_ALIGNMENT_MASTER=${ARGS[5]}
 export DIR=${ARGS[6]}
 
 
-# export
+# [export variables]
 export ALIGNMENT_MAX=${ALIGNMENT_MAX}
 export ALIGNMENT_EVALUE=${ALIGNMENT_EVALUE}
 export ALIGNMENT_QUERY_COVERAGE=${ALIGNMENT_QUERY_COVERAGE}
@@ -195,7 +195,7 @@ function run_module(){
 # [[ -z "$DIR_ALIGNMENT" ]] && echo "! ERROR: <dir_align> empty, exiting... "; usage; exit 1
 # [[ -z "$DIR" ]] && echo "! ERROR: <dir> empty, exiting... "; usage; exit 1
 
-mkdir -p  $DIR_ALIGNMENT_MASTER $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
+mkdir -p  $DIR_ALIGNMENT_MERGE $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
 
 if [ $COMMAND == "all" ]; then
     run_align
