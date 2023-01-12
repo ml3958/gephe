@@ -71,6 +71,7 @@ if __name__ == '__main__':
     # parse input argument
     parser = argparse.ArgumentParser(description='Change fasta name for jgi [*.genes.faa] files ')
     parser.add_argument('file_diamond', help='diamond output of pickle')
+    parser.add_argument('file_metadata', help='metadata')
     parser.add_argument('output_dir', help='Output directory')
     args = parser.parse_args()
 
