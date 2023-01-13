@@ -87,8 +87,8 @@ if __name__ == '__main__':
     
     if not os.path.exists(fileout_pp):
 
-        diamond = pd.read_pickle(open(file_diamond,'rb'))
-
+        #diamond = pd.read_pickle(open(file_diamond,'rb'))
+        diamond=pd.read_table(file_diamond)
         diamond[['qseqid']].value_counts().to_pickle(fileout_hsp_count)
 
         pp = diamond_to_pp(diamond,genomes)
