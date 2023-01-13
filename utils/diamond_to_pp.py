@@ -36,6 +36,12 @@ import scipy.cluster.hierarchy as shc
 import dfply
 
 
+def read_diamond_output(diamond_file):
+    diamond = pd.read_table(diamond_file,
+                            header=None,sep='\t'
+                            names=['qseqid','sseqid','pident','length','mismatch','gapopen','qlen','qstart','qend','slen','start','send','evalue','bitscore'] # column already exists for customized diamond output format
+                            )
+    return(diamond)
 
 def diamond_to_pp(diamond,genomes):
     pp = pd.DataFrame({'query':diamond.qseqid,
@@ -88,7 +94,7 @@ if __name__ == '__main__':
     if not os.path.exists(fileout_pp):
 
         #diamond = pd.read_pickle(open(file_diamond,'rb'))
-        diamond=pd.read_table(file_diamond)
+        diamond=read_diamond(file_diamond)
         diamond[['qseqid']].value_counts().to_pickle(fileout_hsp_count)
 
         pp = diamond_to_pp(diamond,genomes)
