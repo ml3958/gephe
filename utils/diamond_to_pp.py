@@ -75,12 +75,15 @@ if __name__ == '__main__':
     parser.add_argument('output_dir', help='Output directory')
     args = parser.parse_args()
 
+    
     file_diamond = args.file_diamond
     prefix = os.path.basename(file_diamond).replace('.diamond.out.pickle','')
     fileout_pp = args.output_dir + '/' + prefix+ '_pp.pickle'
     fileout_hsp_count = args.output_dir + '/' + prefix+ '_HSP_count.pickle'
-
-
+    
+    metadata = pd.read_table(file_metadata)
+    genomes = metadata.taxon_oid
+    
     if not os.path.exists(fileout_pp):
 
         diamond = pd.read_pickle(open(file_diamond,'rb'))
