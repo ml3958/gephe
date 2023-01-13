@@ -77,6 +77,7 @@ if __name__ == '__main__':
 
     
     file_diamond = args.file_diamond
+    file_metadata = args.file_metadata
     prefix = os.path.basename(file_diamond).replace('.diamond.out.pickle','')
     fileout_pp = args.output_dir + '/' + prefix+ '_pp.pickle'
     fileout_hsp_count = args.output_dir + '/' + prefix+ '_HSP_count.pickle'
