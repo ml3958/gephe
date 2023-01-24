@@ -100,7 +100,7 @@ if __name__ == '__main__':
     FILE_PROTSEQ_ALIGNMENT_META = DIR_OUT + FILE_FAA + '.biocycmeta.diamond.out'
     # FILE_PROTSEQ_ALIGNMENT_UNIREF = DIR_OUT + FILE_FAA + '.uniref90.diamond.out'
     out_full = DIR_OUT + '/' + FILE_FAA + '.protein_annot'
-    out_summary = DIR_OUT + '/' + FILE_mcl + '.pog_annot'
+    out_summary = DIR_OUT + '/' + FILE_MCL + '.pog_annot'
 
     # step 1. map selected proteins to biocyc tier 1 database (skip if done previously)
     if os.path.exists(out_full):
