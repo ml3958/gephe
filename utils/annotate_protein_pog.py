@@ -106,19 +106,10 @@ if __name__ == '__main__':
     if os.path.exists(out_full):
         print(out_full+' exists --> skipping the subseq, alignment, protein annotation')
     else:
-        pog[1].protein.to_csv(FILE_PROTSEQ,sep='\t',index=False)
-        command = ['seqtk subseq',
-           FAA,
-           FILE_PROTSEQ,
-           '>',
-           FILE_PROTSEQ_FAA]
-        command = ' '.join(command)
-        os.system(command)
-
         # diamond alignment to
         if not os.path.exists(FILE_PROTSEQ_ALIGNMENT_META):
             command = ['time diamond blastp','--db', db_biocyc,
-            '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_META,
+            '--query', FILE_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_META,
                '--max-target-seqs','1',
                '--query-cover', '66',
               '--evalue 1e-10',
@@ -130,7 +121,7 @@ if __name__ == '__main__':
         # if not os.path.exists(FILE_PROTSEQ_ALIGNMENT_UNIREF):
         #     command = ['time diamond blastp',
         #       '--db', db_uniref90,
-        #       '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_UNIREF,
+        #       '--query', FILE_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_UNIREF,
         #        '--max-target-seqs','1',
         #        '--query-cover', '66',
         #       '--evalue 1e-10',
