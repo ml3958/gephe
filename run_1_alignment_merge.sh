@@ -33,9 +33,9 @@ else
   mkdir $DIR_FAA_MERGE
   python $gephe_dir/alignment/merge_faa.py ${DIR_FAA} ${DIR_FAA_MERGE} ${N_FAA_TO_MERGE}
 fi
+
+
 # -----------------------------
-
-
 echo "  1.3 build reference db"[$(date --rfc-3339=seconds)]
 if [ ! -f ${DIR_ALIGNMENT_MASTER}/input.fasta ] || [ ! -s ${DIR_ALIGNMENT_MASTER}/input.fasta ]
 then

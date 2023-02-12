@@ -48,16 +48,19 @@ def diamond_to_pp(diamond,genomes):
                        'genome':diamond.sseqid.map(lambda x: x.split('|')[0]),
                        'value':1})
     pp = pp.drop_duplicates()
+    print(pp.head())
     pp = pp.pivot_table(index='query',columns='genome',values='value',fill_value=0)
-
+    print(pp.head())
     # add space for genomes that are absent from the alignment
     genomes_absent = np.setdiff1d(genomes, pp.columns)
     pp_absent = pd.DataFrame(np.zeros((pp.shape[0],len(genomes_absent))), index=pp.index, columns = genomes_absent)
+    # print(len(genomes_absent))
+
     pp2 = pd.concat((pp,pp_absent),axis=1)
 
     pp2 = pp2.loc[:,genomes]
-    print(pp2.head())
-    print(pp2.shape)
+    # print(pp2.head())
+    # print(pp2.shape)
     return(pp2)
 
 def pp_metadata_association(pp,metadata):
@@ -81,16 +84,17 @@ if __name__ == '__main__':
     parser.add_argument('output_dir', help='Output directory')
     args = parser.parse_args()
 
-    
+
     file_diamond = args.file_diamond
     file_metadata = args.file_metadata
     prefix = os.path.basename(file_diamond).replace('.diamond.out.pickle','')
     fileout_pp = args.output_dir + '/' + prefix+ '_pp.pickle'
     fileout_hsp_count = args.output_dir + '/' + prefix+ '_HSP_count.pickle'
-    
+
     metadata = pd.read_table(file_metadata)
     genomes = metadata.taxon_oid
-    
+    print(genomes)
+
     if not os.path.exists(fileout_pp):
 
         #diamond = pd.read_pickle(open(file_diamond,'rb'))
