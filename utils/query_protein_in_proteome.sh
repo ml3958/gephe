@@ -37,3 +37,4 @@ diamond blastp \
 # -----------------------------
 echo "  1.3 Convert diamond.out to phylogenetic profiles"[$(date --rfc-3339=seconds)]
 diamond_to_pp.py ${DIR_OUT}${PREFIX}.diamond.out ${METADATA} ${DIR_OUT}
+diamond_to_pp_count.py ${DIR_OUT}${PREFIX}.diamond.out ${METADATA} ${DIR_OUT}
