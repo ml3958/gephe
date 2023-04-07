@@ -7,6 +7,7 @@ PREFIX=${3}
 # the INPUT_FILE_PATH needs to contain a column names input_path
 
 
+mkdir -p ${DIR_OUT}
 # -----------------------------
 echo "  1.1 build reference db"[$(date --rfc-3339=seconds)]
 # parallel "echo {}" ::: $(awk 'NR==1{for(i=1;i<=NF;i++) if($i=="input_path") col=i} {print $col}' input_2881_5species_per_GTDB_2428gem.txt))
@@ -21,6 +22,14 @@ do
   fi
 done
 
+
+
+if [ ! -f ${PREFIX}.dmnd ] || [ ! -s ${PREFIX}.dmnd ]
+then
+  diamond makedb --in ${DIR_OUT}/${PREFIX}.faa --db ${DIR_OUT}/${PREFIX}
+else
+  echo ${DIR_OUT}/${PREFIX}.dmnd exists, skip coping....[$(date --rfc-3339=seconds)]
+fi
 
 
 # # -----------------------------
