@@ -14,7 +14,7 @@ echo "  1.1 build reference db"[$(date --rfc-3339=seconds)]
 
 for path in $(awk 'NR==1{for(i=1;i<=NF;i++) if($i=="input_path") col=i} {print $col}' ${INPUT_FILE_PATH})
 do
-  if [ -f myfile.txt ]; then
+  if [ -f $path]; then
     echo coping $path
     cat $path >> ${DIR_OUT}/${PREFIX}.faa
   else
