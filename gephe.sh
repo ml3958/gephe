@@ -9,7 +9,7 @@ Author: Menghan Liu
 Tavazoie lab @ Columibia University
 
 SYNTAX:
-  gephe COMMAND [Options] <metadata> <metadata_pos> <phenotype_colname> <input_dir> <alignment_dir> <result_dir>
+  gephe COMMAND [Options] <metadata> <metadata_pos> <phenotype_colname> <alignment_dir> <result_dir>
 
 COMMAND:
   all         Run complete pipeline [align -> associate -> pog -> module]
@@ -101,9 +101,9 @@ export COMMAND=${ARGS[0]}
 export METADATA=${ARGS[1]}
 export METADATA_POS=${ARGS[2]}
 export PHENOTYPE_COLNAME=${ARGS[3]}
-export DIR_INPUT=${ARGS[4]}
-export DIR_ALIGNMENT_MASTER=${ARGS[5]}
-export DIR=${ARGS[6]}
+# export DIR_INPUT=${ARGS[4]}  # exclude in Version 5
+export DIR_ALIGNMENT_MASTER=${ARGS[4]}
+export DIR=${ARGS[5]}
 
 
 # [export variables]
