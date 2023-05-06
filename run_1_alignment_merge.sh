@@ -10,7 +10,7 @@ then
     do
       if [ -f ${i} ]
         then
-          cat ${i}.faa  >> ${DIR_ALIGNMENT_MASTER}/input.fasta
+          cat ${i}  >> ${DIR_ALIGNMENT_MASTER}/input.fasta
         else
           echo $(basename ${i}) does not exist
       fi
