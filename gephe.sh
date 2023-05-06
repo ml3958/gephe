@@ -197,6 +197,22 @@ function run_module(){
 
 mkdir -p  $DIR_ALIGNMENT_MERGE $DIR_ASSOCIATION $DIR_ASSOCIATION/summary/ $DIR_POG $DIR_MODULE $DIR_LOG
 
+# check whether input exists
+if [ ! -f "$METADATA" ]
+then
+    echo "Error: metadata file $METADATA not found"
+    exit 1
+fi
+
+if [ ! -f "$METADATA_POS" ]
+then
+    echo "Error: metadata_pos file $METADATA_POS not found"
+    exit 1
+fi
+
+
+
+# Run the pipeline
 if [ $COMMAND == "all" ]; then
     run_align
     run_associate

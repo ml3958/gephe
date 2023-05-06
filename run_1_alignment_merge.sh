@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# DIR_INPUT=/mnt/data1/menghanliu/gephe_jgi/0_data/ # JGI data specific
+
+
 # -----------------------------
 echo "  1.1 build reference db"[$(date --rfc-3339=seconds)]
 # -----------------------------
@@ -38,29 +39,47 @@ else
     mkdir $DIR_FAA
     for i in $(cut -f2 $METADATA_POS)
       do
-        if [ ! -f ${i} ]
+        if [ -f ${i} ]
           then
             echo coping to $(basename ${i})....
-            if [ -f ${i} ]
-              then
-                cp ${i} $DIR_FAA/
-              else
-                echo $(basename ${i}) does not exist
-            fi
+            cp ${i} $DIR_FAA/
+          else
+            echo $(basename ${i}) does not exist
         fi
-    done
+      done
 fi
 
 # -----------------------------
 echo " 1.3 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
 # -----------------------------
-if [ -d ${DIR_FAA_MERGE} ]
+if [ -d "$DIR_FAA" ]
 then
-  echo $DIR_FAA_MERGE exists, skip faa merging [$(date --rfc-3339=seconds)]
+    read -p "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n) " answer
+    if [[ "$answer" =~ [yY](es)* ]]
+    then
+        echo "Copying files to $DIR_FAA..."
+    else
+        echo "Skipping copying"
+        exit 0
+    fi
 else
-  mkdir $DIR_FAA_MERGE
-  python $gephe_dir/alignment/merge_faa.py ${DIR_FAA} ${DIR_FAA_MERGE} ${N_FAA_TO_MERGE}
+    mkdir "$DIR_FAA"
+    echo "Creating directory $DIR_FAA..."
 fi
+
+while read -r line
+do
+    file=$(echo "$line" | cut -f2)
+    if [ ! -f "$file" ]
+    then
+        echo "Error: file $file not found"
+        # exit 1
+    fi
+    echo "Copying $(basename "$file") to $DIR_FAA..."
+    cp "$file" "$DIR_FAA/"
+done < "$METADATA_POS"
+
+echo "Done."
 
 # -----------------------------
 echo "  1.4 Aligning..."[$(date --rfc-3339=seconds)]
