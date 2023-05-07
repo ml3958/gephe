@@ -94,7 +94,7 @@ fi
 if [ ! -d "$DIR_FAA_MERGE" ]
 then
     mkdir "$DIR_FAA_MERGE"
-    python "$gephe_dir/alignment/merge_faa.py" -n_faa_to_merge "$N_FAA_TO_MERGE" "$DIR_FAA" "$DIR_FAA_MERGE" 
+    python "$gephe_dir/alignment/merge_faa.py" -n_faa_to_merge $N_FAA_TO_MERGE "$DIR_FAA" "$DIR_FAA_MERGE" 
 fi
 
 
