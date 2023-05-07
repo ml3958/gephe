@@ -15,7 +15,7 @@ from tqdm import tqdm
 
 def merge_faa(dir_faa, dir_faa_merge, n_file_to_merge = 200):
 
-    os.chdir(dir_faa)
+    # os.chdir(dir_faa)
 
     # all faa files
     # --------------
