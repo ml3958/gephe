@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Merge faa files')
     parser.add_argument('dir_input', help='Path to .faa files')
     parser.add_argument('dir_output', help='Path to save merged .faa files')
-    parser.add_argument('-n_faa_to_merge', default=200, help='${N_FAA_TO_MERGE}')
+    parser.add_argument('-n_faa_to_merge', default=200, help='${N_FAA_TO_MERGE}', type=int)
     args = parser.parse_args()
 
     dir_input = args.dir_input
