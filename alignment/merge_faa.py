@@ -19,7 +19,7 @@ def merge_faa(dir_faa, dir_faa_merge, n_file_to_merge = 200):
 
     # all faa files
     # --------------
-    faa_files = glob.glob(dir_faa + '/*faa')
+    faa_files = glob.glob(dir_faa + '*faa')
     # print(faa_files)
 
     # group faa files into chuncks, with each chunck roughly 200 files
