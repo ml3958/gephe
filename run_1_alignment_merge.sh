@@ -32,26 +32,8 @@ fi
 # -----------------------------
 echo "  1.2 cp input .faa files"[$(date --rfc-3339=seconds)]
 # -----------------------------
-if [ -d $DIR_FAA ]
-then
-    echo $DIR_FAA exists, skip coping [$(date --rfc-3339=seconds)]
-else
-    mkdir $DIR_FAA
-    for i in $(cut -f2 $METADATA_POS)
-      do
-        if [ -f ${i} ]
-          then
-            echo coping to $(basename ${i})....
-            cp ${i} $DIR_FAA/
-          else
-            echo $(basename ${i}) does not exist
-        fi
-      done
-fi
 
-# -----------------------------
-echo " 1.3 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
-# -----------------------------
+# determine whether to overwrite exisiting
 if [ -d "$DIR_FAA" ]
 then
     # read -p "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n) " answer
@@ -61,29 +43,62 @@ then
     # echo "Enter your name: " > /dev/tty
     # read name < /dev/tty
     then
-        echo "Copying files to $DIR_FAA..."
+        echo "Overwriting $DIR_FAA..."
+        rm -rf $DIR_FAA
     else
         echo "Skipping copying"
         exit 0
     fi
 else
-    mkdir "$DIR_FAA"
     echo "Creating directory $DIR_FAA..."
 fi
 
-while read -r line
-do
-    file=$(echo "$line" | cut -f2)
-    if [ ! -f "$file" ]
-    then
-        echo "Error: file $file not found"
-        # exit 1
-    fi
-    echo "Copying $(basename "$file") to $DIR_FAA..."
-    cp "$file" "$DIR_FAA/"
-done < "$METADATA_POS"
+# actual copying
+if [ ! -d "$DIR_FAA" ]
+then
+  while read -r line
+  do
+      file=$(echo "$line" | cut -f2)
+      if [ ! -f "$file" ]
+      then
+          echo "Error: file $file not found"
+          # exit 1
+      fi
+      echo "Copying $(basename "$file") to $DIR_FAA..."
+      cp "$file" "$DIR_FAA/"
+  done < "$METADATA_POS"
+fi
 
-echo "Done."
+
+# -----------------------------
+echo " 1.3 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
+# -----------------------------
+
+# determine whether to overwrite exisiting
+if [ -d "$DIR_FAA_MERGE" ]
+then
+    echo "Directory $DIR_FAA_MERGE already exists. Do you want to overwrite it? (y/n)" > /dev/tty
+    read answer < /dev/tty
+    if [[ "$answer" =~ [yY](es)* ]]
+    then
+        echo "Overwriting $DIR_FAA_MERGE..."
+        rm -rf "$DIR_FAA_MERGE"
+    else
+        echo "Skipping copying"
+        exit 0
+    fi
+else
+    echo "Creating directory $DIR_FAA_MERGE..."
+fi
+
+# actual merging
+if [ ! -d "$DIR_FAA_MERGE" ]
+then
+    mkdir "$DIR_FAA_MERGE"
+    python "$gephe_dir/alignment/merge_faa.py" "$DIR_FAA" "$DIR_FAA_MERGE" "$N_FAA_TO_MERGE"
+fi
+
+
 
 # -----------------------------
 echo "  1.4 Aligning..."[$(date --rfc-3339=seconds)]
