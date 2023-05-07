@@ -54,8 +54,12 @@ echo " 1.3 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
 # -----------------------------
 if [ -d "$DIR_FAA" ]
 then
-    read -p "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n) " answer
+    # read -p "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n) " answer
+    echo "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n)" > /dev/tty
+    read answer < /dev/tty
     if [[ "$answer" =~ [yY](es)* ]]
+    # echo "Enter your name: " > /dev/tty
+    # read name < /dev/tty
     then
         echo "Copying files to $DIR_FAA..."
     else
