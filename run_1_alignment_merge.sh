@@ -84,7 +84,7 @@ then
         rm -rf "$DIR_FAA_MERGE"
     else
         echo "Skipping copying"
-        exit 0
+        # exit 0
     fi
 else
     echo "Creating directory $DIR_FAA_MERGE..."
