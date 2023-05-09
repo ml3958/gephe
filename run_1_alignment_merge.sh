@@ -77,7 +77,10 @@ echo " 1.3 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
 if [ -d "$DIR_FAA_MERGE" ]
 then
     echo "Directory $DIR_FAA_MERGE already exists. Do you want to overwrite it? (y/n)" > /dev/tty
-    read answer < /dev/tty
+
+    # Wait for input for up to 1 minute or automatically respond "yes"
+    read answer < /dev/tty || answer="yes"
+
     if [[ "$answer" =~ [yY](es)* ]]
     then
         echo "Overwriting $DIR_FAA_MERGE..."
@@ -89,6 +92,7 @@ then
 else
     echo "Creating directory $DIR_FAA_MERGE..."
 fi
+
 
 # actual merging
 if [ ! -d "$DIR_FAA_MERGE" ]
@@ -124,7 +128,7 @@ run_diamond(){
 export -f run_diamond
 # parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 mkdir -p ${DIR_ALIGNMENT_MERGE}
-parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
+parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa$| sed 's/.faa//g'`
 
 # -----------------------------
 echo " 1.5 Scan for empty files, and realign"[$(date --rfc-3339=seconds)]  # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
@@ -135,6 +139,26 @@ parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 echo " 1.6 Divide merged .diamond.out"[$(date --rfc-3339=seconds)] # added as part of V4  # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
 # -----------------------------
 
+# determine whether to overwrite exisiting
+if [ -d "$DIR_ALIGNMENT" ]
+then
+    echo "Directory $DIR_ALIGNMENT already exists. Do you want to overwrite it? (y/n)" > /dev/tty
+
+    # Wait for input for up to 1 minute or automatically respond "yes"
+    read answer < /dev/tty || answer="yes"
+
+    if [[ "$answer" =~ [yY](es)* ]]
+    then
+        echo "Overwriting $DIR_ALIGNMENT..."
+        rm -rf "$DIR_ALIGNMENT"
+    else
+        echo "Skipping copying"
+        # exit 0
+    fi
+else
+    echo "Creating directory $DIR_ALIGNMENT..."
+fi
+
 if [ -d ${DIR_ALIGNMENT} ]
 then
   echo ${DIR_ALIGNMENT} exists, skip dividing merged*.diamond.out [$(date --rfc-3339=seconds)]
@@ -142,7 +166,6 @@ else
   mkdir ${DIR_ALIGNMENT}
   parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
 fi
-
 
 
 # -----------------------------
