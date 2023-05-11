@@ -8,6 +8,34 @@ Saeed Tavazoie lab, Department of Biology, Columbia University
 Usage:
 ---------
 
+For alignment
+
++---------------+
+| Determine if  |
+| folder exists |
++---------------+
+         |
++-----------+----------+
+|                      |
++------+------+      +--------+--------+
+| Folder exists? |      | Folder is empty? |
++------+------+      +--------+--------+
+|                      |
++---+---+              +---+---+
+| Yes    |              | No    |
+|        |              |      |
+| Prompt |              |  X   |
++---+----+              +---+---+
+|                      |
++------+-------+      +-------+-------+
+| User responds |      |  X function is  |
+| with input    |      |   performed     |
++------+-------+      +----------------+
+|
++------+-------+
+| End program  |
++--------------+
+
 
 ---------
 File structure:

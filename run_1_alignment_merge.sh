@@ -32,7 +32,6 @@ fi
 # -----------------------------
 echo "  1.2 cp input .faa files"[$(date --rfc-3339=seconds)]
 # -----------------------------
-
 # determine whether to overwrite exisiting
 if [ -d "$DIR_FAA" ]
 then
@@ -55,6 +54,7 @@ fi
 # actual copying
 if [ ! -d "$DIR_FAA" ]
 then
+  mkdir -p $DIR_FAA
   while read -r line
   do
       file=$(echo "$line" | cut -f2)
@@ -67,7 +67,6 @@ then
       cp "$file" "$DIR_FAA/"
   done < "$METADATA_POS"
 fi
-
 
 # -----------------------------
 echo " 1.3 merge .faa files"[$(date --rfc-3339=seconds)] # added as part of V4
