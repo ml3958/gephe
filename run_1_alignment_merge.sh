@@ -37,7 +37,11 @@ if [ -d "$DIR_FAA" ]
 then
     # read -p "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n) " answer
     echo "Directory $DIR_FAA already exists. Do you want to overwrite it? (y/n)" > /dev/tty
-    read answer < /dev/tty
+    # Wait for input for up to 1 minute or automatically respond "yes"
+    read -t 60 answer < /dev/tty || answer="yes"
+
+
+
     if [[ "$answer" =~ [yY](es)* ]]
     # echo "Enter your name: " > /dev/tty
     # read name < /dev/tty
@@ -78,7 +82,7 @@ then
     echo "Directory $DIR_FAA_MERGE already exists. Do you want to overwrite it? (y/n)" > /dev/tty
 
     # Wait for input for up to 1 minute or automatically respond "yes"
-    read answer < /dev/tty || answer="yes"
+    read -t 60 answer < /dev/tty || answer="yes"
 
     if [[ "$answer" =~ [yY](es)* ]]
     then
@@ -144,7 +148,7 @@ then
     echo "Directory $DIR_ALIGNMENT already exists. Do you want to overwrite it? (y/n)" > /dev/tty
 
     # Wait for input for up to 1 minute or automatically respond "yes"
-    read answer < /dev/tty || answer="yes"
+    read -t 60 answer < /dev/tty || answer="yes"
 
     if [[ "$answer" =~ [yY](es)* ]]
     then
