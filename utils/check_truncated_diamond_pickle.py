@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     try:
         # Command that may raise an error
-        result = pd.read_pickle(open('test.pickle','rb'))
+        result = pd.read_pickle(open(file,'rb'))
         print(file + ' ok')
     except Exception as e:
         # Handle the error
