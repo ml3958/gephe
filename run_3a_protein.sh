@@ -17,7 +17,7 @@ python $gephe_dir/pog/generate_pp_for_selectedproteins.py \
   $DIR_ASSOCIATION $DIR_POG -p $PREFIX_PROTEIN
 
 
-echo "  .abc file for selected proteins"  [$(date --rfc-3339=seconds)]   ---- Retired in gephe v5
+echo "  .abc file for selected proteins"  [$(date --rfc-3339=seconds)]  # ---- Retired in gephe v5
 if [ ! -f $DIR_POG/${PREFIX_PROTEIN}.txt] && cut -d, -f1 $DIR_POG/${PREFIX_PROTEIN}.csv > $DIR_POG/${PREFIX_PROTEIN}.txt
 if [ ! -f $DIR_POG/${PREFIX_PROTEIN}.protseq.faa ] && seqtk subseq ${DIR_ALIGNMENT_MASTER}/input.fasta $DIR_POG/${PREFIX_PROTEIN}.txt > $DIR_POG/${PREFIX_PROTEIN}.protseq.faa
 run_diamond_abc(){
