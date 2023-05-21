@@ -18,7 +18,9 @@ python $gephe_dir/pog/generate_pp_for_selectedproteins.py \
 
 
 # echo "  .abc file for selected proteins"  [$(date --rfc-3339=seconds)]   ---- Retired in gephe v5
-cut -d, -f1 ${PREFIX_PROTEIN}.csv | seqtk subseq ${DIR_ALIGNMENT_MASTER}/input.fasta > ${PREFIX_PROTEIN}.protseq.faa
+ll $DIR_POG/${PREFIX_PROTEIN}.csv
+cut -d, -f1 $DIR_POG/${PREFIX_PROTEIN}.csv > $DIR_POG/${PREFIX_PROTEIN}.txt
+seqtk subseq ${DIR_ALIGNMENT_MASTER}/input.fasta $DIR_POG/${PREFIX_PROTEIN}.txt > $DIR_POG/${PREFIX_PROTEIN}.protseq.faa
 run_diamond_abc(){
   f=$1
   if [ ! -f $DIR_POG/${f}.diamond.out ] || [ ! -s $DIR_POG//${f}.diamond.out  ]
@@ -38,10 +40,9 @@ run_diamond_abc(){
       echo $f already exists
   fi
 }
-export -f run_diamond
-run_diamond_abc ${PREFIX_PROTEIN}.protseq.faa
-
-cat ${PREFIX_PROTEIN}.protseq.faa.diamond.out| cut -f1,2,13 > ${PREFIX_PROTEIN}.abc
+export -f run_diamond_abc
+run_diamond_abc $DIR_POG/${PREFIX_PROTEIN}.protseq.faa
+cat $DIR_POG/${PREFIX_PROTEIN}.protseq.faa.diamond.out| cut -f1,2,13 > $DIR_POG/${PREFIX_PROTEIN}.abc
 
 
 
