@@ -27,7 +27,8 @@ diamond blastp \
     --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
     --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
     --outfmt 6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore \
-    -b8 -c1
+    -b8 -c1 \
+    --very-sensitive
 
 
 # # -----------------------------
