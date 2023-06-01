@@ -18,8 +18,14 @@ python $gephe_dir/pog/generate_pp_for_selectedproteins.py \
 
 
 echo "  .abc file for selected proteins"  [$(date --rfc-3339=seconds)]  # ---- Retired in gephe v5
-if [ ! -f $DIR_POG/${PREFIX_PROTEIN}.txt] && cut -d, -f1 $DIR_POG/${PREFIX_PROTEIN}.csv > $DIR_POG/${PREFIX_PROTEIN}.txt
-if [ ! -f $DIR_POG/${PREFIX_PROTEIN}.protseq.faa ] && seqtk subseq ${DIR_ALIGNMENT_MASTER}/input.fasta $DIR_POG/${PREFIX_PROTEIN}.txt > $DIR_POG/${PREFIX_PROTEIN}.protseq.faa
+if [ ! -f "$DIR_POG/${PREFIX_PROTEIN}.txt" ]; then
+	  cut -d, -f1 "$DIR_POG/${PREFIX_PROTEIN}.csv" > "$DIR_POG/${PREFIX_PROTEIN}.txt"
+fi
+
+if [ ! -f "$DIR_POG/${PREFIX_PROTEIN}.protseq.faa" ]; then
+	  seqtk subseq "${DIR_ALIGNMENT_MASTER}/input.fasta" "$DIR_POG/${PREFIX_PROTEIN}.txt" > "$DIR_POG/${PREFIX_PROTEIN}.protseq.faa"
+fi
+
 run_diamond_abc(){
   f=$1
   if [ ! -f $DIR_POG/${f}.diamond.out ] || [ ! -s $DIR_POG//${f}.diamond.out  ]
@@ -33,9 +39,8 @@ run_diamond_abc(){
           --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
           --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
           --outfmt 6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore \
-	        -b8 -c1
-          echo $f.diamond.out finished $(date)
-    else
+	        -b8 echo $f.diamond.out finished $(date)
+  else
       echo $f already exists
   fi
 }
