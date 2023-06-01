@@ -12,7 +12,6 @@ then
     -I ${MCL_I} -te 10
 fi
 
-#
 echo "  POG annotate"[$(date --rfc-3339=seconds)]
 python $gephe_dir/pog/annotate_pog.py \
   $DIR_ALIGNMENT_MASTER $DIR_POG $PREFIX_PROTEIN $PREFIX_POG -f ${REP_PROTEIN_FRAC}
