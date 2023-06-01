@@ -39,7 +39,8 @@ run_diamond_abc(){
           --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
           --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
           --outfmt 6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore \
-	        -b8 echo $f.diamond.out finished $(date)
+	        -b8
+      echo $f.diamond.out finished $(date)
   else
       echo $f already exists
   fi
