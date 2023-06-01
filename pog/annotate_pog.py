@@ -112,6 +112,7 @@ if __name__ == '__main__':
 
     # # step 1
     pog = mcl_to_pog(FILE_POG,FILE_PROTEIN_DIC)
+    print(head(pog))
     if not os.path.exists(FILE_POG + '.pickle'):
         pickle.dump(pog,open(FILE_POG + '.pickle','wb'))
 
