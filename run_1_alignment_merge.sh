@@ -155,8 +155,7 @@ then
         echo "Overwriting $DIR_ALIGNMENT..."
         rm -rf "$DIR_ALIGNMENT"
     else
-        echo "Skipping copying"
-        # exit 0
+        echo ${DIR_ALIGNMENT} unchanged [$(date --rfc-3339=seconds)]
     fi
 else
     echo "Creating directory $DIR_ALIGNMENT..."
@@ -166,7 +165,7 @@ if [ -d ${DIR_ALIGNMENT} ]
 then
   echo ${DIR_ALIGNMENT} exists, skip dividing merged*.diamond.out [$(date --rfc-3339=seconds)]
 else
-  mkdir ${DIR_ALIGNMENT}
+  mkdir -p ${DIR_ALIGNMENT}
   parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
 fi
 
