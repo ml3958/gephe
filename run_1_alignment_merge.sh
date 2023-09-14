@@ -154,22 +154,25 @@ then
     then
         echo "Overwriting $DIR_ALIGNMENT..."
         rm -rf "$DIR_ALIGNMENT"
+        mkdir -p ${DIR_ALIGNMENT}
+        parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
     else
         echo ${DIR_ALIGNMENT} unchanged [$(date --rfc-3339=seconds)]
     fi
 else
-    echo "Creating directory $DIR_ALIGNMENT..."
+      mkdir -p ${DIR_ALIGNMENT}
+      parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
 fi
 
-if [ -d ${DIR_ALIGNMENT} ]
-then
-  echo ${DIR_ALIGNMENT} exists, skip dividing merged*.diamond.out [$(date --rfc-3339=seconds)]
-else
-  mkdir -p ${DIR_ALIGNMENT}
-  parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
-fi
-
-
+# if [ -d ${DIR_ALIGNMENT} ]
+# then
+#   echo ${DIR_ALIGNMENT} exists, skip dividing merged*.diamond.out [$(date --rfc-3339=seconds)]
+# else
+#   mkdir -p ${DIR_ALIGNMENT}
+#   parallel "python $gephe_dir/alignment/divide_diamondout.py $DIR_ALIGNMENT_MERGE/{} $DIR_ALIGNMENT" ::: `ls $DIR_ALIGNMENT_MERGE`
+# fi
+#
+#
 # -----------------------------
 echo "  1.7 Pickle diamond output"[$(date --rfc-3339=seconds)]
 # -----------------------------
