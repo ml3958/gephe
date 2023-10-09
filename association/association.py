@@ -100,6 +100,12 @@ if __name__ == '__main__':
 
         pp = diamond_to_pp(diamond,genomes)
         pickle.dump(pp, open(fileout_pp,'wb'))
+        print('saving ' + fileout_pp)
 
         mi = pp_metadata_association(pp,metadata[metadata_colname])
         pickle.dump(mi, open(fileout_mi,'wb'))
+        print('saving ' + fileout_mi)
+
+        # diamond = read_diamond_output(f)
+    else:
+        print(fileout_pp +' exists, skipping')
