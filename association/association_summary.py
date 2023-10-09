@@ -15,7 +15,7 @@ from statsmodels import stats
 from scipy.stats import zscore,pearsonr,spearmanr
 
 import numpy as np
-from numba import jit,njit,cuda
+#from numba import jit,njit,cuda
 import multiprocessing as mp
 from itertools import islice
 
