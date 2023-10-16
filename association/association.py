@@ -102,11 +102,16 @@ if __name__ == '__main__':
         pickle.dump(pp, open(fileout_pp,'wb'))
         print('saving ' + fileout_pp)
     else:
-        pp = pd.read_pickle(open(fileout_pp,'rb'))
+        # pp = pd.read_pickle(open(fileout_pp,'rb'))
         print(fileout_pp +' exists, skipping')
 
 
     if not os.path.exists(fileout_mi):
+        try:
+            myVar
+        except NameError:
+            pp = pd.read_pickle(open(fileout_pp,'rb'))
+    # Do something.
         mi = pp_metadata_association(pp,metadata[metadata_colname])
         pickle.dump(mi, open(fileout_mi,'wb'))
         print('saving ' + fileout_mi)
