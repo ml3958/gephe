@@ -31,7 +31,7 @@ OPTIONS:
     -q, --align_query_c   alignment query coverage cutoff <default: 66>
     -s, --align_subject_c alignment query coverage cutoff <default: 60>
     -e, --align_e   alignment evalue cutoff   <default: 1e-10>
-    -k, --align_k   alignment max hits        <default: 500>
+    -k, --align_k   alignment max hits        <default: 10000>
     -n, --align_n   # of parallel jobs        <default: 50>
 
 
