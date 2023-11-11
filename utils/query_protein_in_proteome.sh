@@ -28,7 +28,7 @@ diamond blastp \
     --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
     --outfmt 6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore \
     -b8 -c1 \
-    --very-sensitive
+    --very-sensitive >${DIR_OUT}/${PREFIX}.diamond.log 2>${DIR_OUT}/${PREFIX}.diamond.err
 
 
 # # -----------------------------
