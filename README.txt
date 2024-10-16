@@ -8,53 +8,45 @@ Saeed Tavazoie lab, Department of Biology, Columbia University
 Usage:
 ---------
 
-For alignment
 
-+---------------+
-| Determine if  |
-| folder exists |
-+---------------+
-         |
-+-----------+----------+
-|                      |
-+------+------+      +--------+--------+
-| Folder exists? |      | Folder is empty? |
-+------+------+      +--------+--------+
-|                      |
-+---+---+              +---+---+
-| Yes    |              | No    |
-|        |              |      |
-| Prompt |              |  X   |
-+---+----+              +---+---+
-|                      |
-+------+-------+      +-------+-------+
-| User responds |      |  X function is  |
-| with input    |      |   performed     |
-+------+-------+      +----------------+
-|
-+------+-------+
-| End program  |
-+--------------+
+Cross-species microbial genotype phenotype association for functional module discovery
+
+Author: Menghan Liu
+Tavazoie lab @ Columibia University
+
+SYNTAX:
+  gephe COMMAND [Options] <metadata> <metadata_pos> <phenotype_colname> <alignment_dir> <result_dir>
+
+COMMAND:
+  all         Run complete pipeline [align -> associate -> pog -> module]
+  align       Align proteins
+  associate   Associate proteins with the phenotype
+  pog         Select phenotype-conferring proteins and convert to POGs
+  module      Assign POGs to modules
+  help        Show this message
+
+OPTIONS:
+  general:
+    -h, --help 		show help message
+
+  COMMAND all:
+    --skip-align
+    --skip-align-associate
+
+  COMMAND align:
+    -q, --align_query_c   alignment query coverage cutoff <default: 66>
+    -s, --align_subject_c alignment query coverage cutoff <default: 60>
+    -e, --align_e   alignment evalue cutoff   <default: 1e-10>
+    -k, --align_k   alignment max hits        <default: 10000>
+    -n, --align_n   # of parallel jobs        <default: 50>
 
 
----------
-File structure:
----------
-- dir_diamond:
-      - input.fasta
-      - input_database.dmnd
-      - 649633097.diamond.out
-      - 649633097.diamond.out.pickle
+  COMMAND pog:
+    -t, --top_perc  top percentage (%) as phenotype-conferring proteins <default: 0.2>
+    -i, --mcl_i     MCL I value                                         <default: 1.4>
+    -p, --pp_mode   phylogenetic profile "binary|proportion|evalue"     <default: binary>
+    -b, --pp_bc     cutoff for binary phylogenetic profiles             <default: 0.5>
+    -f, --pog_frac  fraction of proteins as representatice sequence     <default: 1>
 
-- dir_pp:
-      - top_*%_*.csv_alignment.mci
-      - top_*%_*.csv_alignment.mci_I*.mcl
-      - top_*%_*.csv_alignment.mci_I*.mcl_annot_full.txt
-      - top_*%_*.csv_alignment.mci_I*.mcl_annot_summary.txt
-      - top_*%_*.csv_alignment.mci_I*.mcl.pickle
-      - top_*%_*.csv_alignment.mci_I*.mcl_pp_ortho.csv
-      - top_*%_*.csv.dic
-      - top_*%_*.csv_pp.csv
-      - test
-
-- dir_pp_pog:
+  COMMAND module:
+    -m, --module_n 	# of modules  <default: 20>
