@@ -110,37 +110,64 @@ fi
 # -----------------------------
 echo "  1.4 Aligning..."[$(date --rfc-3339=seconds)]
 # -----------------------------
-run_diamond(){
+# run_diamond(){
+#   f=$1
+#   if [ ! -f $DIR_ALIGNMENT_MERGE/${f}.diamond.out ] || [ ! -s $DIR_ALIGNMENT_MERGE/${f}.diamond.out  ]
+#     then
+#       echo $f started $(date)
+#           diamond blastp \
+#           -q ${DIR_FAA_MERGE}/${f}.faa \
+#           --out ${DIR_ALIGNMENT_MERGE}/${f}.diamond.out \
+#           --db ${DIR_ALIGNMENT_MASTER}/input \
+#           -e ${ALIGNMENT_EVALUE} -k ${ALIGNMENT_MAX} \
+#           --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
+#           --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
+#           --outfmt 6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore \
+# 	        -b8 -c1
+#           echo $f finished $(date)
+#     else
+#       echo $f already exists
+#   fi
+# }
+# export -f run_diamond
+
+
+run_mmseqs(){
   f=$1
-  if [ ! -f $DIR_ALIGNMENT_MERGE/${f}.diamond.out ] || [ ! -s $DIR_ALIGNMENT_MERGE/${f}.diamond.out  ]
+  if [ ! -f $DIR_ALIGNMENT_MERGE/${f}.m8 ] || [ ! -s $DIR_ALIGNMENT_MERGE/${f}.m8  ]
     then
       echo $f started $(date)
-          diamond blastp \
-          -q ${DIR_FAA_MERGE}/${f}.faa \
-          --out ${DIR_ALIGNMENT_MERGE}/${f}.diamond.out \
-          --db ${DIR_ALIGNMENT_MASTER}/input \
-          -e ${ALIGNMENT_EVALUE} -k ${ALIGNMENT_MAX} \
-          --query-cover ${ALIGNMENT_QUERY_COVERAGE} \
-          --subject-cover ${ALIGNMENT_SUBJECT_COVERAGE} \
-          --outfmt 6 qseqid sseqid pident length mismatch gapopen qlen qstart qend slen sstart send evalue bitscore \
-	        -b8 -c1
-          echo $f finished $(date)
+      mmseqs search \
+            ${DIR_FAA_MERGE}/${f}.faa \
+            ${DIR_ALIGNMENT_MASTER}/input \
+            ${DIR_ALIGNMENT_MERGE}/${f}.m8 \
+            ${DIR_ALIGNMENT_MERGE}/${f}.m8_tmp \
+            -e ${ALIGNMENT_EVALUE} \
+            -s 4.0 \
+            --max-seqs ${ALIGNMENT_MAX} \
+            -c ${ALIGNMENT_QUERY_COVERAGE} >${DIR_ALIGNMENT_MERGE}/${f}.m8.out  2>${DIR_ALIGNMENT_MERGE}/${f}.m8.err
+      mmseqs convertalis \
+        ${DIR_FAA_MERGE}/${f}.faa \
+        ${DIR_ALIGNMENT_MASTER}/input \
+        ${DIR_ALIGNMENT_MERGE}/${f}.m8 \
+        ${DIR_ALIGNMENT_MERGE}/${f}.mmseqs.out \
+        --format-output query,target,fident,alnlen,mismatch,gapopen,qlen,qstart,qend,tlen,tstart,tend,evalue,bits
+      echo $f finished $(date)
     else
       echo $f already exists
   fi
 }
-export -f run_diamond
 # parallel -j ${ALIGNMENT_NJOBS} run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 mkdir -p ${DIR_ALIGNMENT_MERGE}
-parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa$| sed 's/.faa//g'`
+parallel -j 1 run_mmseqs  ::: `ls ${DIR_FAA_MERGE}| grep faa$| sed 's/.faa//g'`
 
 # -----------------------------
 echo " 1.5 Scan for empty files, and realign"[$(date --rfc-3339=seconds)]  # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
 # -----------------------------
-parallel -j 1 run_diamond  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
+parallel -j 1 run_mmseqs  ::: `ls ${DIR_FAA_MERGE}| grep faa| sed 's/.faa//g'`
 
 # -----------------------------
-echo " 1.6 Divide merged .diamond.out"[$(date --rfc-3339=seconds)] # added as part of V4  # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
+echo " 1.6 Divide merged mmseqs output"[$(date --rfc-3339=seconds)] # added as part of V4  # 08/02/2022 [This is added in V4 because I always notice empty alignment output]
 # -----------------------------
 
 # determine whether to overwrite exisiting
