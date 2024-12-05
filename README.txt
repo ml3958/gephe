@@ -34,11 +34,12 @@ OPTIONS:
     --skip-align-associate
 
   COMMAND align:
-    -q, --align_query_c   alignment query coverage cutoff <default: 66>
-    -s, --align_subject_c alignment query coverage cutoff <default: 60>
-    -e, --align_e   alignment evalue cutoff   <default: 1e-10>
-    -k, --align_k   alignment max hits        <default: 10000>
-    -n, --align_n   # of parallel jobs        <default: 50>
+    -a, --aligner_to_use  alignment tool to use ("diamond" or "mmseqs")         <default: diamond>
+    -q, --align_query_c   alignment query coverage cutoff                       <default: 66>
+    -s, --align_subject_c alignment query coverage cutoff                       <default: 50>
+    -e, --align_e         alignment evalue cutoff                               <default: 1e-10>
+    -k, --align_k         alignment max hits                                    <default: 10000>
+    -n, --align_n         # of parallel jobs                                    <default: 50>
 
 
   COMMAND pog:
