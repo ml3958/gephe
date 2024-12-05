@@ -28,11 +28,12 @@ OPTIONS:
     --skip-align-associate
 
   COMMAND align:
-    -q, --align_query_c   alignment query coverage cutoff <default: 66>
-    -s, --align_subject_c alignment query coverage cutoff <default: 60>
-    -e, --align_e   alignment evalue cutoff   <default: 1e-10>
-    -k, --align_k   alignment max hits        <default: 10000>
-    -n, --align_n   # of parallel jobs        <default: 50>
+    -a, --aligner_to_use  alignment tool to use ("diamond" or "mmseqs")         <default: diamond>
+    -q, --align_query_c   alignment query coverage cutoff                       <default: 66>
+    -s, --align_subject_c alignment query coverage cutoff                       <default: 50>
+    -e, --align_e         alignment evalue cutoff                               <default: 1e-10>
+    -k, --align_k         alignment max hits                                    <default: 10000>
+    -n, --align_n         # of parallel jobs                                    <default: 50>
 
 
   COMMAND pog:
@@ -49,6 +50,7 @@ EOF
 
 
 # [optional variables with default values]
+ALIGNER='diamond'
 ALIGNMENT_MAX=10000
 ALIGNMENT_EVALUE='1e-10'
 ALIGNMENT_QUERY_COVERAGE='66'
@@ -69,8 +71,9 @@ while [ $# -gt 0 ]
 do
     unset OPTIND
     unset OPTARG
-    while getopts "hq:s:e:k:n:t:i:p:b:m:f:j:" opt; do
+    while getopts "ha:q:s:e:k:n:t:i:p:b:m:f:j:" opt; do
         case $opt in
+            a ) ALIGNER=$OPTARG;;
             q ) ALIGNMENT_QUERY_COVERAGE=$OPTARG ;;
             s ) ALIGNMENT_SUBJECT_COVERAGE=$OPTARG ;;
             e ) ALIGNMENT_EVALUE=$OPTARG ;;
@@ -155,11 +158,13 @@ export DIR_LOG=$DIR/logs_${PREFIX_MODULE}/
 function run_align(){
   echo --------------- --------------- --------------- ---------------
   echo STEP1: Alignment STARTED... [$(date --rfc-3339=seconds)]
-  bash $gephe_dir/run_1_alignment_merge.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err  # recommended for > 1000 genomes
-  # bash $gephe_dir/run_1_alignment.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err  # default
+  if [ $ALIGNER == "diamond" ]; then
+      bash $gephe_dir/run_1_alignment_merge.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err  # recommended for > 1000 genomes
+    elif [ $ALIGNER == "mmseqs" ]; then
+      bash $gephe_dir/run_1_alignment_merge_mmseqs2.sh > $DIR_LOG/alignment.out 2> $DIR_LOG/alignment.err  # recommended for > 1000 genomes
+  fi
   echo STEP1: Alignment FINISHED   [$(date --rfc-3339=seconds)]
   echo --------------- --------------- --------------- ---------------
-
 }
 
 function run_associate(){

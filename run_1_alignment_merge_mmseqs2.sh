@@ -145,7 +145,7 @@ run_mmseqs(){
             -e ${ALIGNMENT_EVALUE} \
             -s 4.0 \
             --max-seqs ${ALIGNMENT_MAX} \
-            -c ${ALIGNMENT_QUERY_COVERAGE} >${DIR_ALIGNMENT_MERGE}/${f}.m8.out  2>${DIR_ALIGNMENT_MERGE}/${f}.m8.err
+            -c ${ALIGNMENT_QUERY_COVERAGE} 
       mmseqs convertalis \
         ${DIR_FAA_MERGE}/${f}.faa \
         ${DIR_ALIGNMENT_MASTER}/input \
