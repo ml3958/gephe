@@ -1,4 +1,4 @@
-# Genotype-phenotype association pipeline
+# Genotype-Habitat Association Pipeline
 
 - A computational pipeline that enables cross-species genotype-phenotype association at the *tree-of-life* scale. 
 - Written by [Menghan Liu](https://scholar.google.com/citations?user=c0x_8r4AAAAJ&hl=en&oi=ao), Tavazoie lab @ Columbia University  
@@ -10,8 +10,9 @@
 
 
 ## 📖 Wiki & Tutorials
-For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml3958/gephe_wiki/wiki). You will find:
+For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml3958/gephe_wiki/wiki/Genotype%E2%80%90phenotype-Association-Pipeline-Wiki).
 <!--
+ You will find:
 - **Project Overviews** – Learn about the key projects hosted here.  
 - **Installation Guides** – Step-by-step setup instructions.  
 - **Code Usage** – How to run and analyze the scripts in this repository.  
