@@ -20,6 +20,6 @@ For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml
 -->
 
 ## 📜 Citation
-If you use this pipeline in your research, please cite:
+If you use this pipeline for your research, please cite:
 - Liu M, et al. "Conserved Gene Modules Govern Microbial Colonization of the Mammalian Gut." *XXX*, 2025.
   [doi:10.xxxx/xxxx](https://doi.org/10.xxxx/xxxx)
