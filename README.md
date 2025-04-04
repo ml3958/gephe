@@ -5,7 +5,7 @@
 
   
 ## 🔗 Links
-- [Preprint](https://www.cell.com/cell/fulltext/S0092-8674(25)00283-1)
+- [Publication](https://www.cell.com/cell/fulltext/S0092-8674(25)00283-1)
 - [Genotype-habitat association](https://tavazoielab.c2b2.columbia.edu/GHA/)
 
 
