@@ -5,7 +5,7 @@
 
   
 ## 🔗 Links
-- [Preprint](cell.com/XXXX)
+- [Preprint](https://www.cell.com/cell/fulltext/S0092-8674(25)00283-1)
 - [Genotype-habitat association](https://tavazoielab.c2b2.columbia.edu/GHA/)
 
 
@@ -21,5 +21,4 @@ For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml
 
 ## 📜 Citation
 If you use this pipeline for your research, please cite:
-- Liu M, et al. "Conserved Gene Modules Govern Microbial Colonization of the Mammalian Gut." *XXX*, 2025.
-  [doi:10.xxxx/xxxx](https://doi.org/10.xxxx/xxxx)
+- Liu M, et al. "Conserved Gene Modules Govern Microbial Colonization of the Mammalian Gut." *Cell*, 2025.
