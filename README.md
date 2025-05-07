@@ -10,7 +10,7 @@
 
 
 ## 📖 Wiki & Tutorials
-For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml3958/gephe_wiki/wiki/Genotype%E2%80%90phenotype-Association-Pipeline-Wiki).
+For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml3958/gephe/wiki/Gephe-wiki).
 <!--
  You will find:
 - **Project Overviews** – Learn about the key projects hosted here.  
