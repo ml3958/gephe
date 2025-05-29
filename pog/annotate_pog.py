@@ -77,6 +77,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='pog functional annotation')
     parser.add_argument('dir_alignment_master',help='alignment folder')
     parser.add_argument('dir_pog',help='pog folder')
+    parser.add_argument('dir_gephe',help='${gephe_dir}')
     parser.add_argument('prefix_protein',help='${PREFIX_PROTEIN}')
     parser.add_argument('prefix_pog',help='${PREFIX_POG}')
     parser.add_argument('-f',dest='pog_protein_fraction',type=float,help='${PREFIX_POG}')
@@ -86,6 +87,7 @@ if __name__ == '__main__':
 
     DIR_ALIGNMENT_MASTER = args.dir_alignment_master
     DIR_POG = args.dir_pog
+    DIR_GEPHE = args.dir_gephe
     PREFIX_PROTEIN = args.prefix_protein
     PREFIX_POG = args.prefix_pog
     REP_PROTEIN_FRAC = args.pog_protein_fraction
@@ -131,7 +133,9 @@ if __name__ == '__main__':
 
         # diamond alignment to
         if not os.path.exists(FILE_PROTSEQ_ALIGNMENT_META):
-            command = ['time diamond blastp','--db /mnt/data1/menghanliu/data/biocyc_annotation/tier1/combined/combined_protseq_diamond.dmnd',
+            command = ['time diamond blastp',
+            # '--db /mnt/data1/menghanliu/data/biocyc_annotation/tier1/combined/combined_protseq_diamond.dmnd',
+            '--db', DIR_GEPHE+'/annot_db/combined_protseq_diamond.dmnd'
             '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_META,
                '--max-target-seqs','1',
                '--query-cover', '66',
@@ -143,7 +147,8 @@ if __name__ == '__main__':
 
         if not os.path.exists(FILE_PROTSEQ_ALIGNMENT_UNIREF):
             command = ['time diamond blastp',
-              '--db /mnt/data1/menghanliu/data/protein_database/uniref/uniref50.fasta',
+              # '--db /mnt/data1/menghanliu/data/database_protein/uniref/uniref50.fasta',
+              '--db', DIR_GEPHE+'/annot_db/uniref50.fasta'
               '--query', FILE_PROTSEQ_FAA, '--out', FILE_PROTSEQ_ALIGNMENT_UNIREF,
                '--max-target-seqs','1',
                '--query-cover', '66',
@@ -163,7 +168,9 @@ if __name__ == '__main__':
 
 
         annot = left_join(DplyFrame(annot),
-                  pd.read_table('/mnt/data1/menghanliu/data/biocyc_annotation/tier1/combined/combined_protein-links.dat'))
+                  # pd.read_table('/mnt/data1/menghanliu/data/biocyc_annotation/tier1/combined/combined_protein-links.dat')
+                  pd.read_table(DIR_GEPHE+'/annot_db/combined_protein-links.dat')
+                  )
         annot = annot.drop_duplicates()
         print('saved to :' + out_full)
         annot.to_csv(out_full, index=False,sep="\t")
