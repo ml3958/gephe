@@ -11,6 +11,8 @@
 
 ## 📖 Wiki & Tutorials
 For detailed documentation and tutorials, visit the [Wiki](https://github.com/ml3958/gephe/wiki/Gephe-wiki).
+
+When posting your questions in [Issues](https://github.com/ml3958/gephe/issues), please include the full command you used to run *gephe*. 
 <!--
  You will find:
 - **Project Overviews** – Learn about the key projects hosted here.  
